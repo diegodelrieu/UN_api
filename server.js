@@ -15,7 +15,7 @@ server.use(express.static(path.join(__dirname, 'public')));
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
-server.post("/upload", upload.upload);
+server.post("/upload", cors(), upload.upload);
 
 server.use(function(req, res, next) {
   next(createError(404));
