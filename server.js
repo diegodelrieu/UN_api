@@ -5,16 +5,19 @@ const bodyParser = require("body-parser")
 const path = require('path')
 const server = express();
 const createError = require("http-errors")
+const logger = require('morgan');
 
+server.use(cors(corsOptions));
+server.use(logger('dev'));
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
-var corsOptions = {
-  credentials: true,
-  origin: "*",
-  optionsSuccessStatus: 200
-};
+// var corsOptions = {
+//   credentials: true,
+//   origin: "*",
+//   optionsSuccessStatus: 200
+// };
 
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -22,7 +25,6 @@ server.use(function(req, res, next) {
   next();
 })
 
-server.use(cors(corsOptions));
 
 server.post("/upload", upload.upload);
 
