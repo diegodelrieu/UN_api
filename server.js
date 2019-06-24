@@ -7,38 +7,15 @@ const server = express();
 const createError = require("http-errors")
 const logger = require('morgan');
 
-let server = express(); 
+// let server = express(); 
 
-var whitelist = ['https://http://secret-gorge-37168.herokuapp.com/#/']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
+server.use(cors());
 server.use(logger('dev'));
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
-// var corsOptions = {
-//   credentials: true,
-//   origin: "*",
-//   optionsSuccessStatus: 200
-// };
-
-// server.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// })
-
-
-server.post("/upload", cors(corsOptions), upload.upload);
+server.post("/upload", upload.upload);
 
 server.use(function(req, res, next) {
   next(createError(404));
