@@ -11,9 +11,16 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 
 var corsOptions = {
+  credentials: true,
   origin: "*",
   optionsSuccessStatus: 200
 };
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 
 server.use(cors(corsOptions));
 
