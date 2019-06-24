@@ -7,7 +7,7 @@ const server = express();
 const createError = require("http-errors")
 const logger = require('morgan');
 
-server.use(cors(corsOptions));
+server.use(cors());
 server.use(logger('dev'));
 server.use(express.static(path.join(__dirname, 'public')));
 server.use(bodyParser.urlencoded({ extended: true }))
